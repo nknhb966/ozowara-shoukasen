@@ -200,26 +200,9 @@
 
     const lls = [];
     const showIcons = async (list, icon0, addlayer = true) => {
-      const icon = "./icon/" + icon0;
       const iconlayer = L.layerGroup();
       if (addlayer) {
         iconlayer.addTo(map);
-      }
-      const opt = {};
-      try {
-        const img = await fetchImage(icon);
-        const size = getResized(img.width, img.height, 50);
-        const iconw = size.width;
-        const iconh = size.height;
-        opt.icon = L.icon({
-          iconUrl: icon,
-          iconRetilaUrl: icon,
-          iconSize: [iconw, iconh],
-          iconAnchor: [iconw / 2, iconh / 2],
-          popupAnchor: [0, -iconh / 2],
-        });
-      } catch (e) {
-        console.log("can't load: " + icon);
       }
       for (const d of list) {
         const getPos = () => {
@@ -231,6 +214,28 @@
         };
         const ll = getPos();
         if (!ll[0]) return;
+
+        const makeIcon = async () => {
+          const opt = {};
+          try {
+            const icon = "./icon/" + (d.icon || icon0);
+            const img = await fetchImage(icon);
+            const size = getResized(img.width, img.height, 50);
+            const iconw = size.width;
+            const iconh = size.height;
+            opt.icon = L.icon({
+              iconUrl: icon,
+              iconRetilaUrl: icon,
+              iconSize: [iconw, iconh],
+              iconAnchor: [iconw / 2, iconh / 2],
+              popupAnchor: [0, -iconh / 2],
+            });
+          } catch (e) {
+            console.log("can't load: " + icon0);
+          }
+          return opt;
+        };
+        const opt = await makeIcon();
         const marker = L.marker(ll, opt);
         const tbl = makeTable(d);
         tbl.className = "mapinfo";
