@@ -1,6 +1,6 @@
-# 福井市 棗地区 シビックテック
+# 越前市 岡本地区 シビックテック
 
-## 福井市 棗地区 地域安全 キッズセーフマップ / Kidssafe MAP in Kunitaka
+## 越前市 岡本地区 地域安全 キッズセーフマップ / Kidssafe MAP in Kunitaka
 
 - https://code4fukui.github.io/kidssafe-natsume/
 
