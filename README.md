@@ -6,11 +6,6 @@
 - ExcelやNumbersを使ってCSVデータを編集しアップロードすることで更新できます
 - [キッズセーフ by Code for FUKUI](https://github.com/code4fukui/kidssafe/) を使って作られています
 
-## 設定方法
-
-- [index.html](index.html) - アプリ設定（都市名、地域名、ソースコード）を設定する
-- [index.csv](index.csv) - 地図に表示するCSVデータを設定する
-
 ## データの更新方法
 
 1. 変更したいデータを確認する (例、[aed.csv](aed.csv))
