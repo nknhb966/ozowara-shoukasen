@@ -2,7 +2,7 @@
 
 ## 越前市 岡本地区 地域安全 キッズセーフマップ / Kidssafe MAP in Kunitaka
 
-- https://code4fukui.github.io/kidssafe-natsume/
+- https://code4fukui.github.io/kidssafe-okamoto/
 
 ## ソースコード
 
