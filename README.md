@@ -1,6 +1,6 @@
 # 越前市 岡本地区 シビックテック
 
-## 越前市 岡本地区 地域安全 キッズセーフマップ / Kidssafe MAP in Kunitaka
+## 越前市 岡本地区 地域安全 キッズセーフマップ / Kidssafe MAP in Okamoto
 
 - https://code4fukui.github.io/kidssafe-okamoto/
 
