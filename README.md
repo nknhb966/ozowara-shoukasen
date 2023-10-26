@@ -1,37 +1,54 @@
-# 越前市 岡本地区 シビックテック
-
-## 越前市 岡本地区 地域安全 キッズセーフマップ / Kidssafe MAP in Okamoto
+# キッズセーフ 越前市 岡本地区 / KidsSafe for Echizen-city Okamoto
 
 - https://code4fukui.github.io/kidssafe-okamoto/
 
-## ソースコード
+- 〇〇市〇〇地区の地域安全マップを作成して、スマホやパソコンで見られる形で共有するツールです
+- ExcelやNumbersを使ってCSVデータを編集しアップロードすることで更新できます
+- [キッズセーフ by Code for FUKUI](https://github.com/code4fukui/kidssafe/) を使って作られています
 
-- [index.html](index.html) - JavaScriptによるソースコード付きHTML
+## 設定方法
 
-## 危険箇所編集方法
+- [index.html](index.html) - アプリ設定（都市名、地域名、ソースコード）を設定する
+- [index.csv](index.csv) - 地図に表示するCSVデータを設定する
 
-下記アプリ「緯度経度地図」から該当場所に動かして、Geo3x3をコピーする
-- https://fukuno.jig.jp/app/map/latlng/#%E8%B6%8A%E5%89%8D%E5%B8%82
+## データの更新方法
+
+1. 変更したいデータを確認する (例、[aed.csv](aed.csv))
+2. ダウンロードボタンを押し、ダウンロードする
+
+<img width="306" alt="image" src="https://github.com/code4fukui/kidssafe-template/assets/1715217/053db2b7-1931-4b7c-b369-326523190d64">
+
+3. Excelで編集する
+4. 位置情報は、「[緯度経度地図](https://fukuno.jig.jp/app/map/latlng/#%E8%B6%8A%E5%89%8D%E5%B8%82)」から該当場所に動かして、Geo3x3欄に表示された文字列を項目Geo3x3にコピーする
 
 <img width="511" alt="image" src="https://user-images.githubusercontent.com/1715217/219602296-2d3b72ce-581a-4ba8-8c69-edbe1b95ee76.png">
 
-## 横展開の仕方
+5. Excelで保存する
+6. [./](./) に編集したファイルをドロップし、アップロード(Upload)する
 
-1. 本リポジトリをcloneする
-2. タイトルやデータを地区に合わせて変更する
-3. GitHub Pages(SettingsのPages)を設定し公開する
+<img width="306" alt="image" src="https://github.com/code4fukui/kidssafe-template/assets/1715217/53bdf652-f38a-47dc-8b3e-defa62f989ce">
 
-## 開発貢献の仕方
+7. 1分ほど待つと更新される（しばらくはキャッシュが使われることがあるので、プライベートモードなどで開いて確認するといい）
 
-### cloneする
+## データ種の追加方法
 
-1. [GitHub Desktop](https://desktop.github.com/)をインストール
-2. 緑色のボタン「Code」を押し「Open with GitHub Desktop」を選ぶ
-3. [Deno](https://deno.land/)をインストール
-4. kunitakaのディレクトリ内で下記を実行する
-```sh
-deno run --allow-net --allow-read https://taisukef.github.io/liveserver/liveserver.js
-```
-5. 表示されたリンクをブラウザ開く （例、 [http://[::]:7001/](http://[::]:7001/))
-6. [kidssafe.html](kidssafe.html) などを、編集する （自動的に変更がブラウザに反映される）
-7. GitHub Desktopで、ブランチを作り、プルリクする
+1. [template.csv](template.csv)をダウンロードし、Excelで開く
+2. 2行目以降に地図に設定したい情報を記述する（項目は自由に増やせます）
+3. Excelの「ファイル」「名前を付けて保存」を選び「ファイル形式」を「CSV UTF-8(コンマ区切り)(.csv)」に変更して、データ種類がわかるような英数ファイル名で保存する
+4. [index.csv](index.csv)をダウンロードし、Excelで開く
+5. 3で保存したファイル名とデータ種類名、アイコンファイル名を記述する
+6. [./](./) にindex.csvと3で保存したファイルをドロップし、アップロード(Upload)する
+7. 1分ほど待つと更新される（しばらくはキャッシュが使われることがあるので、プライベートモードなどで開いて確認するといい）
+
+## アイコン追加方法
+
+1. 大きさ100x100程度の画像を用意し、PNG形式、半角英数名で保存する（JPEGだと背景が透けません）
+2. [icon](icon)フォルダを表示し、エクスプローラーなどからドロップし、アップロード(Upload)する
+3. [index.csv](index.csv)や各データをダウンロードし、Excelで開き、icon項目を該当ファイル名に変更する
+4. 編集したファイルを [./](./) へアップロードする
+5. 1分ほど待つと更新される（しばらくはキャッシュが使われることがあるので、プライベートモードなどで開いて確認するといい）
+
+## 要望などは
+
+- この地区のキッズセーフについて [Issues](../../issues)
+- キッズセーフのアプリについて [キッズセーフのIssues](https://github.com/code4fukui/kidssafe/issues)
