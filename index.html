@@ -83,7 +83,7 @@
     comp.style.backgroundColor = "#D74938";
     comp.style.color = "white";
     
-    document.title = "福井市棗地区 地域安全マップ「キッズセーフ」";
+    document.title = "越前市岡本地区 地域安全マップ「キッズセーフ」";
 
     const header = document.createElement("header");
     header.style.height = "56px";
@@ -115,7 +115,7 @@
     menuButton.appendChild(menuIconImage);
 
     const subtitle = document.createElement("span");
-    subtitle.textContent = "福井市棗地区 地域安全マップ";
+    subtitle.textContent = "越前市岡本地区 地域安全マップ";
     subtitle.style.fontSize = "16px";
     subtitle.style.lineHeight = "1";
     subtitle.style.gridArea = "subtitle";
@@ -230,6 +230,7 @@
           return [d.lat, d.lng];
         };
         const ll = getPos();
+        if (!ll[0]) return;
         const marker = L.marker(ll, opt);
         const tbl = makeTable(d);
         tbl.className = "mapinfo";
@@ -352,7 +353,7 @@
       //{ text: "アイコン（その他） by いらすとや", url: "https://www.irasutoya.com/" },
       //{ text: "下記データは、オープンデータライセンスでご利用いただけます", url: "https://github.com/code4fukui/opendata-license/" },
       //{} text: "テレマティクスオープンデータ by あいおいニッセイ同和損保", url: "https://www.aioinissaydowa.co.jp/" },
-      //{ text: "地域安全オープンデータ by 棗地区", url: "https://www.city.echizen.lg.jp/office/010/130030/kunitaka.html" },
+      //{ text: "地域安全オープンデータ by 越前市岡本地区", url: "https://www.city.echizen.lg.jp/office/010/130030/kunitaka.html" },
       //{ text: "街灯オープンデータ by 越前市", url: "http://www.city.echizen.lg.jp/index.html" },
     ];
     for (const link of links) {
