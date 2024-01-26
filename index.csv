@@ -3,7 +3,7 @@
 AED,aed.csv,aed.png
 見守り隊,mimamori.csv,midori_obasan.png
 交通事故発生箇所,accident.csv,aioi_8.png
-文化,文化.csv,1.png
+文化,bunka.csv,1.png
 防犯カメラ,bouhan.csv,bohan_camera.png
-越前和紙工房,越前和紙工房.csv,1.png
-岡本地区観光,岡本地区観光.csv,1.png
+越前和紙工房,workshops.csv,1.png
+岡本地区観光,sightseeing.csv,1.png
