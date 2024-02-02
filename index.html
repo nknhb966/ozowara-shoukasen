@@ -308,7 +308,7 @@
       for (const layer of layers) {
         const chk = new CheckBox(layer[0]);
         drawerItems.appendChild(chk);
-        if (!layer[0].endsWith("・")) {
+        if (!layer[0].endsWith(" ")) {
           chk.checked = true;
         } else {
           chk.checked = false;
