@@ -308,7 +308,11 @@
       for (const layer of layers) {
         const chk = new CheckBox(layer[0]);
         drawerItems.appendChild(chk);
-        chk.checked = true;
+        if (!layer[0].startsWith("文化")) {
+          chk.checked = true;
+        } else {
+          chk.checked = false;
+        }
         if (!chk.checked) {
           map.removeLayer(layer[1]);
         }
