@@ -223,18 +223,18 @@
     const size = getResized(img.width, img.height, 50);
     const iconw = size.width;
     const iconh = size.height;
- 
-    const [iconUrl] = await Promise.all([
-      fetchImage(icon),
-    ]);
- 
     opt.icon = L.icon({
-      iconUrl: iconUrl,
-      iconRetilaUrl: iconUrl,
+      iconUrl: icon,
+      iconRetilaUrl: icon,
       iconSize: [iconw, iconh],
       iconAnchor: [iconw / 2, iconh / 2],
       popupAnchor: [0, -iconh / 2],
     });
+  } catch (e) {
+    console.log("can't load: " + icon0);
+  }
+  return opt;
+};
   } catch (e) {
 //    console.log("can't load: " + icon0);
   }
