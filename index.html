@@ -9,6 +9,27 @@
   //import { InputCheckbox } from "https://code4fukui.github.io/input-checkbox/input-checkbox.js";
   import { create } from "https://js.sabae.cc/stdcomp.js";
 
+  const sizecache = {};
+  const initSizeCache = async () => {
+    try {
+      const d = await (await fetch("imgsize.json")).json();
+      for (const name in d) {
+        sizecache[name] = d[name];
+      }
+    } catch (e) {
+    }
+  };
+  const getImageSize = async (url) => {
+    const img = sizecache[url];
+    if (img) return img;
+    const img2 = await fetchImage(url);
+    sizecache[url] = { width: img2.width, height: img2.height };
+    return img2;
+  };
+  const showSizeCache = () => {
+    console.log(JSON.stringify(sizecache, null, 2));
+  };
+
   class CheckBox extends HTMLElement {
     constructor(s) {
       super();
@@ -219,7 +240,7 @@
   const opt = {};
   try {
     const icon = "./icon/" + (d.icon || icon0);
-    const img = await fetchImage(icon);
+    const img = await getImageSize(icon);
     const size = getResized(img.width, img.height, 50);
     const iconw = size.width;
     const iconh = size.height;
@@ -279,7 +300,8 @@
     //
     const layers = [];
 
-    // 危険箇所
+    // アイコン
+    await initSizeCache();
     const url = "./index.csv";
     const data = CSV.toJSON(await CSV.fetch(url));
     for (const d of data) {
@@ -296,6 +318,7 @@
     if (lls.length) {
       map.fitBounds(lls);
     }
+    // showSizeCache();
 
     // for (const point of accidents){
     //     const marker = L.icon([parseFloat(point.緯度), parseFloat(point.経度)],
