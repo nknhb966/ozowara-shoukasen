@@ -235,13 +235,7 @@
   }
   return opt;
 };
-  } catch (e) {
-//    console.log("can't load: " + icon0);
-  }
-  return opt;
-};
-
-        const opt = await makeIcon();
+  const opt = await makeIcon();
         const marker = L.marker(ll, opt);
         const tbl = makeTable(d);
         tbl.className = "mapinfo";
