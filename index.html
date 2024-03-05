@@ -354,6 +354,31 @@
       }
     }
 
+    // filter
+    const inp = document.createElement("input");
+    inp.type = "text";
+    inp.placeholder = "フィルタ";
+    inp.oninput = () => {
+      const key = inp.value;
+      const isMatch = (d) => {
+        for (const name in d) {
+          if (d[name].indexOf(key) >= 0) {
+            return true;
+          }
+        }
+        return false;
+      };
+      for (const icon of icons) {
+        icon.layer.removeLayer(icon);
+      }
+      for (const icon of icons) {
+        if (isMatch(icon.data)) {
+          icon.layer.addLayer(icon);
+        }
+      }
+    };
+    drawerItems.appendChild(inp);
+
     // 現在地を監視してピン/マップを動かす
     const watchGPS = new CheckBox("現在地追従モード")
     let watchPosition;
@@ -383,32 +408,6 @@
     };
     drawerItems.appendChild(watchGPS);
 
-    // filter
-    const inp = document.createElement("input");
-    inp.type = "text";
-    inp.placeholder = "フィルタ";
-    inp.oninput = () => {
-      const key = inp.value;
-      const isMatch = (d) => {
-        for (const name in d) {
-          if (d[name].indexOf(key) >= 0) {
-            return true;
-          }
-        }
-        return false;
-      };
-
-      for (const icon of icons) {
-        icon.layer.removeLayer(icon);
-      }
-      for (const icon of icons) {
-        if (isMatch(icon.data)) {
-          icon.layer.addLayer(icon);
-        }
-      }
-      
-    };
-    drawerItems.appendChild(inp);
 
     // footer
     const links = [
@@ -451,6 +450,5 @@
   input[type=text] {
     font-size: 16px;
     padding: .3em;
-    margin-bottom: 1em;
   }
 </style>
