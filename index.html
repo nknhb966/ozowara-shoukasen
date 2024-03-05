@@ -219,6 +219,8 @@
       maxNativeZoom: 18,
     }).addTo(map);
 
+    const icons = [];
+
     const lls = [];
     const showIcons = async (list, icon0, addlayer = true) => {
       const iconlayer = L.layerGroup();
@@ -258,6 +260,9 @@
 };
   const opt = await makeIcon();
         const marker = L.marker(ll, opt);
+        marker.data = d;
+        marker.layer = iconlayer;
+        icons.push(marker);
         const tbl = makeTable(d);
         tbl.className = "mapinfo";
         marker.bindPopup(tbl.outerHTML); // `<img width="300px" src=${path}>`);
@@ -378,6 +383,33 @@
     };
     drawerItems.appendChild(watchGPS);
 
+    // filter
+    const inp = document.createElement("input");
+    inp.type = "text";
+    inp.placeholder = "フィルタ";
+    inp.oninput = () => {
+      const key = inp.value;
+      const isMatch = (d) => {
+        for (const name in d) {
+          if (d[name].indexOf(key) >= 0) {
+            return true;
+          }
+        }
+        return false;
+      };
+
+      for (const icon of icons) {
+        icon.layer.removeLayer(icon);
+      }
+      for (const icon of icons) {
+        if (isMatch(icon.data)) {
+          icon.layer.addLayer(icon);
+        }
+      }
+      
+    };
+    drawerItems.appendChild(inp);
+
     // footer
     const links = [
       { text: "データ編集や閲覧はGitHubで", url: "https://github.com/code4fukui/kidssafe-okamoto/" },
@@ -415,5 +447,10 @@
   }
   a {
     color: gray !important;
+  }
+  input[type=text] {
+    font-size: 16px;
+    padding: .3em;
+    margin-bottom: 1em;
   }
 </style>
