@@ -7,8 +7,18 @@
 - [キッズセーフ by Code for FUKUI](https://github.com/code4fukui/kidssafe/) を使って作られています
 
 ## サイトをホーム画面に追加する方法
-‐スマホの操作が苦手な方にも、すぐにキッズセーフが閲覧できるように分かりやすい説明を作りました。
-[ホーム画面登録(android）.pptx](https://github.com/code4fukui/kidssafe-okamoto/files/14518682/android.pptx)
+◆スマホの操作が苦手な方にも、すぐにキッズセーフが閲覧できるように分かりやすい説明を作りました。
+
+・[ホーム画面登録(android）.pptx](https://github.com/code4fukui/kidssafe-okamoto/files/14518682/android.pptx)
+
+・[ホーム画面登録(iphone).pptx](https://github.com/code4fukui/kidssafe-okamoto/files/14518806/iphone.pptx)
+
+
+## サイトの表示を外国語に切り替える方法
+
+◆サイトの表示を外国語に切り替えて表示したいという時の設定方法を解説してあります。
+
+・[外国語変換方法(iphone).pptx](https://github.com/code4fukui/kidssafe-okamoto/files/14518975/iphone.pptx)
 
 ## データの更新方法
 
