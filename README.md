@@ -6,6 +6,10 @@
 - ExcelやNumbersを使ってCSVデータを編集しアップロードすることで更新できます
 - [キッズセーフ by Code for FUKUI](https://github.com/code4fukui/kidssafe/) を使って作られています
 
+## サイトをホーム画面に追加する方法
+‐スマホの操作が苦手な方にも、すぐにキッズセーフが閲覧できるように分かりやすい説明を作りました。
+[ホーム画面登録(android）.pptx](https://github.com/code4fukui/kidssafe-okamoto/files/14518682/android.pptx)
+
 ## データの更新方法
 
 1. 変更したいデータを確認する (例、[aed.csv](aed.csv))
