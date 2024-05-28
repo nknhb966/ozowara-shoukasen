@@ -113,7 +113,6 @@
     header.style.gridTemplate =`
       "left-button subtitle right-button" 16px
       "left-button title rigth-button" 24px
-      "left-button inp rigth-button" 16px
       / 56px 1fr 56px
     `;
     header.style.gap = "8px";
@@ -378,8 +377,7 @@
         }
       }
     };
-    // drawerItems.appendChild(inp);
-    header.appendChild(inp);
+    drawerItems.appendChild(inp);
 
     // 現在地を監視してピン/マップを動かす
     const watchGPS = new CheckBox("現在地追従モード")
