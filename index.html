@@ -397,7 +397,7 @@
         watchPosition = navigator.geolocation.watchPosition((position) => {
           const currentLoc = [position.coords.latitude, position.coords.longitude];
           currentPositionMarker.setLatLng(currentLoc);
-          map.setView(currentLoc, 16);
+          // map.setView(currentLoc, 16);
         });
       } else {
         navigator.geolocation.clearWatch(watchPosition);
