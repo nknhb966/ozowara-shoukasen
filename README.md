@@ -1,6 +1,6 @@
 # キッズセーフ 越前市 吉野地区 / KidsSafe for Echizen-city Okamoto
 
-- https://code4fukui.github.io/kidssafe-okamoto/
+- https://code4fukui.github.io/kidssafe-yoshino/
 
 - 〇〇市〇〇地区の地域安全マップを作成して、スマホやパソコンで見られる形で共有するツールです
 - ExcelやNumbersを使ってCSVデータを編集しアップロードすることで更新できます
