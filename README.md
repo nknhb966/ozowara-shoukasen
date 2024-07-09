@@ -1,4 +1,4 @@
-# キッズセーフ 越前市 岡本地区 / KidsSafe for Echizen-city Okamoto
+# キッズセーフ 越前市 吉野地区 / KidsSafe for Echizen-city Okamoto
 
 - https://code4fukui.github.io/kidssafe-okamoto/
 
@@ -12,7 +12,6 @@
 ・[ホーム画面登録(android）.pptx](https://github.com/code4fukui/kidssafe-okamoto/files/14518682/android.pptx)
 
 ・[ホーム画面登録(iphone).pptx](https://github.com/code4fukui/kidssafe-okamoto/files/14518806/iphone.pptx)
-
 
 ## サイトの表示を外国語に切り替える方法
 
@@ -56,6 +55,11 @@
 3. [index.csv](index.csv)や各データをダウンロードし、Excelで開き、icon項目を該当ファイル名に変更する
 4. 編集したファイルを [./](./) へアップロードする
 5. 1分ほど待つと更新される（しばらくはキャッシュが使われることがあるので、プライベートモードなどで開いて確認するといい）
+
+## 通学路などを追加する方法
+
+1. [地理院地図](https://maps.gsi.go.jp/#16/35.930774/136.163506/&base=std&ls=std&disp=1&vs=c1g1j0h0k0l0u0t0z0r0s0m0f1)の作図ツールで描いて、GeoJSON形式で保存
+2. アプリに反映する
 
 ## 要望などは
 
