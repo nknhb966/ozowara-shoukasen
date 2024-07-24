@@ -1,4 +1,4 @@
-# キッズセーフ 越前市 吉野地区 / KidsSafe for Echizen-city Okamoto
+# キッズセーフ 越前市 吉野地区 / KidsSafe for Echizen-city Yoshino
 
 - https://code4fukui.github.io/kidssafe-yoshino/
 
