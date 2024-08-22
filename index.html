@@ -331,6 +331,24 @@
     // }
     //     marker.addTo(map);
 
+    
+    //通学路 geojson
+    const roadLayer = L.layerGroup();
+    const geojsonurl1 = "./tsugakuro.geojson";
+    console.log(geojsonurl1);
+    const geojson1 = await (await fetch(geojsonurl1)).json();
+    console.log(geojson1);
+    const schoolzone1 = L.geoJson(geojson1, {
+      style: () => {
+        return {
+          color: "#ff0000",
+          opacity: 1,
+          weight: 5,
+        };
+      },
+    });
+
+    
     // レイヤー選択
     {
       for (const layer of layers) {
