@@ -57,6 +57,7 @@
       return { width: (min * w) / h, height: min };
     }
   };
+  
   const makeTable = (d) => {
     const cr = (tag) => document.createElement(tag);
     const tbl = cr("table");
@@ -69,10 +70,22 @@
       th.style.whiteSpace = "nowrap";
       tr.appendChild(th);
       const td = cr("td");
-      td.style.minWidth = "8em";
+      td.style.minWidth = "15em";
       td.style.wordBreak = "break-all";
-      const n = val.match(/<a href=(.+)>(.+)<\/a>/);
-      if (n) {
+      
+      // 画像データかどうかをチェック
+      if (val.match(/\.(jpeg|jpg|gif|png|bmp)$/i)) {
+        const imgLink = cr("a");
+        imgLink.href = `./photo/${val}`;
+        imgLink.target = "_blank";
+        const img = cr("img");
+        img.src = `./photo/${val}`; // 画像のパスを設定
+        img.style.width = "100%"; // セル幅に合わせて画像を表示
+        img.style.height = "auto"; // アスペクト比を保つ
+        imgLink.appendChild(img);
+        td.appendChild(imgLink);
+      } else if (val.match(/<a href=(.+)>(.+)<\/a>/)) {
+        const n = val.match(/<a href=(.+)>(.+)<\/a>/);
         const url = n[1];
         const cap = n[2];
         td.innerHTML = `<a href=${url}>${cap}</a>`;
@@ -85,6 +98,11 @@
     }
     return tbl;
   };
+
+
+
+
+
 
   window.onload = async () => {
     const comp = document.body;
@@ -107,12 +125,13 @@
     document.title = "越前市吉野地区 地域安全マップ「キッズセーフ」";
 
     const header = document.createElement("header");
-    header.style.height = "56px";
+    header.style.height = "100px";
     header.style.margin = "0";
     header.style.display = "grid";
     header.style.gridTemplate =`
       "left-button subtitle right-button" 16px
       "left-button title rigth-button" 24px
+      "filter filter filter" auto
       / 56px 1fr 56px
     `;
     header.style.gap = "8px";
@@ -149,6 +168,34 @@
     title.style.fontWeight = "bold";
     title.style.gridArea = "title";
     header.appendChild(title);
+
+    // filter
+    const inp = document.createElement("input");
+    inp.type = "text";
+    inp.placeholder = "フィルタ";
+    inp.style.gridArea = "filter";
+    inp.style.width = "80%";
+    inp.style.justifySelf = "center";
+    inp.oninput = () => {
+      const key = inp.value;
+      const isMatch = (d) => {
+        for (const name in d) {
+          if (d[name].indexOf(key) >= 0) {
+            return true;
+          }
+        }
+        return false;
+      };
+      for (const icon of icons) {
+        icon.layer.removeLayer(icon);
+      }
+      for (const icon of icons) {
+        if (isMatch(icon.data)) {
+          icon.layer.addLayer(icon);
+        }
+      }
+    };
+    header.appendChild(inp);
 
     const div = document.createElement("div");
     comp.appendChild(div);
@@ -222,11 +269,13 @@
     const icons = [];
 
     const lls = [];
+
     const showIcons = async (list, icon0, addlayer = true) => {
       const iconlayer = L.layerGroup();
       if (addlayer) {
         iconlayer.addTo(map);
       }
+
       for (const d of list) {
         const getPos = () => {
           const pos = Geo3x3.decode(d.Geo3x3 || d.geo3x3);
@@ -238,27 +287,30 @@
         const ll = getPos();
         if (!ll[0]) return;
 
-      const makeIcon = async () => {
-  const opt = {};
-  try {
-    const icon = "./icon/" + (d.icon || icon0);
-    const img = await getImageSize(icon);
-    const size = getResized(img.width, img.height, 50);
-    const iconw = size.width;
-    const iconh = size.height;
-    opt.icon = L.icon({
-      iconUrl: icon,
-      iconRetilaUrl: icon,
-      iconSize: [iconw, iconh],
-      iconAnchor: [iconw / 2, iconh / 2],
-      popupAnchor: [0, -iconh / 2],
-    });
-  } catch (e) {
-    console.log("can't load: " + icon0);
-  }
-  return opt;
-};
-  const opt = await makeIcon();
+        const makeIcon = async () => {
+          const opt = {};
+          try {
+            // const icon = "https://code4fukui.github.io/kidssafe-okamoto/icon/" + (d.icon || icon0);
+            // const img = await getImageSize(icon);
+            const icon = "./icon/" + icon0;
+            const img = await fetchImage(icon);
+            const size = getResized(img.width, img.height, 50);
+            const iconw = size.width;
+            const iconh = size.height;
+            opt.icon = L.icon({
+              iconUrl: icon,
+              iconRetilaUrl: icon,
+              iconSize: [iconw, iconh],
+              iconAnchor: [iconw / 2, iconh / 2],
+              popupAnchor: [0, -iconh / 2],
+            });
+          } catch (e) {
+            console.log("can't load: " + icon0);
+          }
+        return opt;
+        };
+
+        const opt = await makeIcon();
         const marker = L.marker(ll, opt);
         marker.data = d;
         marker.layer = iconlayer;
@@ -271,6 +323,7 @@
       }
       return iconlayer;
     };
+
     const showPoints = async (list, color) => {
       const iconlayer = L.layerGroup();
       iconlayer.addTo(map);
@@ -316,9 +369,28 @@
         //n["町名"] = d.name;
         list.push(n);
       });
-      console.log(list);
+      // console.log(list);
       layers.push([d.name, await showIcons(list, d.icon)]);
     }
+
+    //通学路 geojson
+    const roadLayer = L.layerGroup();
+    const geojsonurl = "./schoolzone.geojson";
+    // console.log(geojsonurl);
+    const geojson = await (await fetch(geojsonurl)).json();
+    // console.log(geojson);
+    const schoolzone = L.geoJson(geojson, {
+      style: () => {
+        return {
+          color: "#ff0000",
+          opacity: 1,
+          weight: 5,
+        };
+      },
+    });
+    roadLayer.addLayer(schoolzone);
+    roadLayer.addTo(map);
+    layers.push(["通学路", roadLayer]);
 
     if (lls.length) {
       map.fitBounds(lls);
@@ -331,25 +403,6 @@
     // }
     //     marker.addTo(map);
 
-        //通学路 geojson
-    const roadLayer = L.layerGroup();
-    const geojsonurl1 = "./tsugakuro.geojson";
-    console.log(geojsonurl1);
-    const geojson1 = await (await fetch(geojsonurl1)).json();
-    console.log(geojson1);
-    const tsugakuro = L.geoJson(geojson1, {
-      style: () => {
-        return {
-          color: "#ff0000",
-          opacity: 1,
-          weight: 5,
-        };
-      },
-    });
-    roadLayer.addLayer(tsugakuro);
-    roadLayer.addTo(map);
-    layers.push(["通学路", roadLayer]);
-    
     // レイヤー選択
     {
       for (const layer of layers) {
@@ -372,31 +425,6 @@
         };
       }
     }
-
-    // filter
-    const inp = document.createElement("input");
-    inp.type = "text";
-    inp.placeholder = "フィルタ";
-    inp.oninput = () => {
-      const key = inp.value;
-      const isMatch = (d) => {
-        for (const name in d) {
-          if (d[name].indexOf(key) >= 0) {
-            return true;
-          }
-        }
-        return false;
-      };
-      for (const icon of icons) {
-        icon.layer.removeLayer(icon);
-      }
-      for (const icon of icons) {
-        if (isMatch(icon.data)) {
-          icon.layer.addLayer(icon);
-        }
-      }
-    };
-    drawerItems.appendChild(inp);
 
     // 現在地を監視してピン/マップを動かす
     const watchGPS = new CheckBox("現在地追従モード")
