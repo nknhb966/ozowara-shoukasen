@@ -99,11 +99,6 @@
     return tbl;
   };
 
-
-
-
-
-
   window.onload = async () => {
     const comp = document.body;
 
@@ -203,7 +198,7 @@
     style({
       ".divmap": {
         width: "100%",
-        height: "calc(100vh - 56px)",
+        height: "calc(100vh - 100px)",
       },
       "@media print": {
         // 印刷用CSS
@@ -246,7 +241,7 @@
     closeMenuButton.appendChild(closeMenuIconImage);
 
     const drawerItems = document.createElement("div");
-    drawerItems.style.height = "calc(100% - 56px)";
+    drawerItems.style.height = "calc(100% - 100px)";
     drawerItems.style.width = "100%";
     drawerItems.style.padding = "0 8px 16px";
     drawerItems.style.overflowY = "scroll";
@@ -454,7 +449,6 @@
       }
     };
     drawerItems.appendChild(watchGPS);
-
 
     // footer
     const links = [
