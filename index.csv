@@ -1,4 +1,3 @@
 ﻿name,fn,icon
-110番の家,110ban-house_latlng.csv,house110_icon.png
-吉野おさんぽマップ,yoshinoosanpo_XY.csv,osanpo.png
-事件事故箇所,jikenjiko.csv,jiko_car.png
+消火栓,shoukasen.csv,house110_icon.png
+防火水槽,boukasuisou.csv,osanpo.png
