@@ -107,7 +107,7 @@ const makeTable = (d) => {
     tr.appendChild(th);
     const td = cr("td");
     td.style.minWidth = "15em";
-    td.innerHTML = `<a href="http://sample.com/viewpoint=${d.lat},${d.lng}" target="_blank">地図を見る</a>`;
+    td.innerHTML = `<a href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${d.lat},${d.lng}" target="_blank">地図を見る</a>`;
     tr.appendChild(td);
   }
 
@@ -489,5 +489,6 @@ const makeTable = (d) => {
     padding: .3em;
   }
 </style>
+
 
 
