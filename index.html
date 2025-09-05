@@ -58,46 +58,61 @@
     }
   };
   
-  const makeTable = (d) => {
-    const cr = (tag) => document.createElement(tag);
-    const tbl = cr("table");
-    for (const name in d) {
-      const val = d[name];
-      const tr = cr("tr");
-      tbl.appendChild(tr);
-      const th = cr("th");
-      th.textContent = name;
-      th.style.whiteSpace = "nowrap";
-      tr.appendChild(th);
-      const td = cr("td");
-      td.style.minWidth = "15em";
-      td.style.wordBreak = "break-all";
-      
-      // 画像データかどうかをチェック
-      if (val.match(/\.(jpeg|jpg|gif|png|bmp)$/i)) {
-        const imgLink = cr("a");
-        imgLink.href = `./photo/${val}`;
-        imgLink.target = "_blank";
-        const img = cr("img");
-        img.src = `./photo/${val}`; // 画像のパスを設定
-        img.style.width = "100%"; // セル幅に合わせて画像を表示
-        img.style.height = "auto"; // アスペクト比を保つ
-        imgLink.appendChild(img);
-        td.appendChild(imgLink);
-      } else if (val.match(/<a href=(.+)>(.+)<\/a>/)) {
-        const n = val.match(/<a href=(.+)>(.+)<\/a>/);
-        const url = n[1];
-        const cap = n[2];
-        td.innerHTML = `<a href=${url}>${cap}</a>`;
-      } else if (val.startsWith("https://") || val.startsWith("http://")) {
-        td.innerHTML = `<a href=${val}>詳細</a>`;
-      } else {
-        td.textContent = val;
-      }
-      tr.appendChild(td);
+const makeTable = (d) => {
+  const cr = (tag) => document.createElement(tag);
+  const tbl = cr("table");
+  for (const name in d) {
+    const val = d[name];
+    const tr = cr("tr");
+    tbl.appendChild(tr);
+    const th = cr("th");
+    th.textContent = name;
+    th.style.whiteSpace = "nowrap";
+    tr.appendChild(th);
+    const td = cr("td");
+    td.style.minWidth = "15em";
+    td.style.wordBreak = "break-all";
+
+    // 画像データかどうかをチェック
+    if (val.match(/\.(jpeg|jpg|gif|png|bmp)$/i)) {
+      const imgLink = cr("a");
+      imgLink.href = `./photo/${val}`;
+      imgLink.target = "_blank";
+      const img = cr("img");
+      img.src = `./photo/${val}`;
+      img.style.width = "100%";
+      img.style.height = "auto";
+      imgLink.appendChild(img);
+      td.appendChild(imgLink);
+    } else if (val.match(/<a href=(.+)>(.+)<\/a>/)) {
+      const n = val.match(/<a href=(.+)>(.+)<\/a>/);
+      const url = n[1];
+      const cap = n[2];
+      td.innerHTML = `<a href=${url}>${cap}</a>`;
+    } else if (val.startsWith("https://") || val.startsWith("http://")) {
+      td.innerHTML = `<a href=${val}>詳細</a>`;
+    } else {
+      td.textContent = val;
     }
-    return tbl;
-  };
+    tr.appendChild(td);
+  }
+
+  // lat, lng が存在する場合に「地図」行を追加
+  if ("lat" in d && "lng" in d) {
+    const tr = cr("tr");
+    tbl.appendChild(tr);
+    const th = cr("th");
+    th.textContent = "地図";
+    th.style.whiteSpace = "nowrap";
+    tr.appendChild(th);
+    const td = cr("td");
+    td.style.minWidth = "15em";
+    td.innerHTML = `<a href="http://sample.com/viewpoint=${d.lat},${d.lng}" target="_blank">地図を見る</a>`;
+    tr.appendChild(td);
+  }
+
+  return tbl;
+};
 
   window.onload = async () => {
     const comp = document.body;
@@ -117,7 +132,7 @@
     comp.style.backgroundColor = "#D74938";
     comp.style.color = "white";
     
-    document.title = "越前市吉野地区 地域安全マップ「キッズセーフ」";
+    document.title = "越前町 小曽原 消火栓マップ";
 
     const header = document.createElement("header");
     header.style.height = "100px";
@@ -150,14 +165,14 @@
     menuButton.appendChild(menuIconImage);
 
     const subtitle = document.createElement("span");
-    subtitle.textContent = "越前市吉野地区 地域安全マップ";
+    subtitle.textContent = "越前町;
     subtitle.style.fontSize = "16px";
     subtitle.style.lineHeight = "1";
     subtitle.style.gridArea = "subtitle";
     header.appendChild(subtitle);
 
     const title = document.createElement("span");
-    title.textContent = "デジタルマップ";
+    title.textContent = "小曽原 消火栓マップ";
     title.style.fontSize = "24px";
     title.style.lineHeight = "1";
     title.style.fontWeight = "bold";
@@ -368,25 +383,6 @@
       layers.push([d.name, await showIcons(list, d.icon)]);
     }
 
-    //通学路 geojson
-    const roadLayer = L.layerGroup();
-    const geojsonurl = "./tsugakuro.geojson";
-    // console.log(geojsonurl);
-    const geojson = await (await fetch(geojsonurl)).json();
-    // console.log(geojson);
-    const schoolzone = L.geoJson(geojson, {
-      style: () => {
-        return {
-          color: "#ffa500",
-          opacity: 1,
-          weight: 5,
-        };
-      },
-    });
-    roadLayer.addLayer(schoolzone);
-    roadLayer.addTo(map);
-    layers.push(["通学路", roadLayer]);
-
     if (lls.length) {
       map.fitBounds(lls);
     }
@@ -452,8 +448,8 @@
 
     // footer
     const links = [
-      { text: "データ編集や閲覧はGitHubで", url: "https://github.com/code4fukui/kidssafe-yoshino/" },
-      { text: "アイコン CC BY okiku.graphic", url: "https://www.instagram.com/okame.graphic/" },
+      { text: "データ編集や閲覧はGitHubで", url: "https://github.com/nknhb966/ozowara-shoukasen/" },
+      //{ text: "アイコン CC BY okiku.graphic", url: "https://www.instagram.com/okame.graphic/" },
       //{ text: "アイコン（その他） by いらすとや", url: "https://www.irasutoya.com/" },
       //{ text: "下記データは、オープンデータライセンスでご利用いただけます", url: "https://github.com/code4fukui/opendata-license/" },
       //{} text: "テレマティクスオープンデータ by あいおいニッセイ同和損保", url: "https://www.aioinissaydowa.co.jp/" },
@@ -493,3 +489,4 @@
     padding: .3em;
   }
 </style>
+
